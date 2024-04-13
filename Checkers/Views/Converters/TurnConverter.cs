@@ -12,9 +12,7 @@ namespace Checkers.Views.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			Colors playerTurn = (Colors)value;
-
-			return playerTurn == Colors.White ? "White player's turn to move" : "Black player's turn to move";
+			return (Colors)value == Colors.White ? "White player's turn to move" : "Black player's turn to move";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

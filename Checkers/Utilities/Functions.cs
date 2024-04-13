@@ -46,32 +46,6 @@ namespace Checkers.Utilities
 			return (ImageTypes)((int)type * 10 + (int)color);
 		}
 
-		/*public static string ColorToString(Colors color)
-		{
-			return color == Colors.White ? "White" : "Black";
-		}
-
-		public static string TypeToString(Types type)
-		{
-			return type == Types.Queen ? "Queen" : "King";
-		}
-
-		public static Colors StringToColor(string str)
-		{
-			if (str == "White")
-			{
-				return Colors.White;
-			}
-			else if (str == "Black")
-			{
-				return Colors.Black;
-			}
-			else
-			{
-				throw new ArgumentException("Invalid color string");
-			}
-		}*/
-
 		public static BitmapImage LoadImage(string filePath)
 		{
 			try

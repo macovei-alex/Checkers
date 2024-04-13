@@ -24,7 +24,7 @@ namespace Checkers.ViewModels.Commands
 
 		public override bool CanExecute(object parameter)
 		{
-			if (_gameVM.SelectedPiece == null)
+			/*if (_gameVM.SelectedPiece == null)
 			{
 				return PieceNotEmpty() && PieceGoodColor();
 			}
@@ -37,7 +37,7 @@ namespace Checkers.ViewModels.Commands
 			if (_gameVM.Game.AllowMultipleMoves)
 			{
 				return true;
-			}
+			}*/
 
 			return true;
 		}

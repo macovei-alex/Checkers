@@ -45,6 +45,7 @@
             <Button Name="ApplyMoveButton" Content="Apply Current Move"/>
 
             <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
+            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}"/>
         </StackPanel>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -64,10 +65,12 @@
                                     <Button Width="70" Height="70" Content="{Binding}" Command="{Binding ClickCommand}">
                                         <Button.Template>
                                             <ControlTemplate>
+                                                
                                                 <Grid>
                                                     <Rectangle Stretch="Fill" Fill="Green"/>
                                                     <Image Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Opacity="{Binding ImageOpacity, UpdateSourceTrigger=PropertyChanged}"/>
                                                 </Grid>
+                                                
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>

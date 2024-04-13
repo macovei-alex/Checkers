@@ -78,6 +78,17 @@ namespace Checkers.ViewModels
 			}
 		}
 
+		private string _errorMessage;
+		public string ErrorMessage
+		{
+			get => _errorMessage;
+			set
+			{
+				_errorMessage = value;
+				OnPropertyChanged(nameof(ErrorMessage));
+			}
+		}
+
 		public GameVM()
 		{
 			Board board = new Board();
@@ -128,24 +139,38 @@ namespace Checkers.ViewModels
 
 		private void HandleCaseSelectedNull(PieceVM piece)
 		{
+			if (Game.Board[piece.BoardPosition].Type == Types.None)
+			{
+				return;
+			}
+			if (Game.Board[piece.BoardPosition].Color != Game.Turn)
+			{
+				return;
+			}
+
 			SelectedPiece = piece;
 			Functions.AddRange(PossibleMoves, Game.GetLegalMoves(Game.Board, SelectedPiece.BoardPosition));
 		}
 
 		private void HandleCaseNotAllowMultiple(PieceVM piece)
 		{
-			if (piece == SelectedPiece)
+			if (SelectedPiece != piece)
 			{
-				SelectedPiece = null;
-				Functions.Clear(PossibleMoves);
-				return;
+				try
+				{
+					if (Game.Move(SelectedPiece.BoardPosition, piece.BoardPosition))
+					{
+						MessageBox.Show($"{Game.Turn} won!");
+					}
+				}
+				catch (GameException exception)
+				{
+					ErrorMessage = exception.Message;
+				}
 			}
 
-			if (Game.Move(SelectedPiece.BoardPosition, piece.BoardPosition))
-			{
-				MessageBox.Show($"{Game.Turn} won!");
-			}
-
+			SelectedPiece = null;
+			Functions.Clear(PossibleMoves);
 			UpdateImages();
 		}
 
@@ -155,7 +180,7 @@ namespace Checkers.ViewModels
 			{
 				for (int j = 0; j < Game.Board.Columns; j++)
 				{
-					BoardVM.PiecesVM[i][j].ImageType = Functions.MakeImageType(Enums.Types.None, Enums.Colors.White);
+					BoardVM.PiecesVM[i][j].ImageType = Functions.MakeImageType(Game.Board[i, j].Type, Game.Board[i, j].Color);
 				}
 			}
 		}
