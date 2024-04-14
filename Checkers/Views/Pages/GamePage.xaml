@@ -32,10 +32,7 @@
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
-            <MenuItem Header="_Edit">
-                <MenuItem Header="_Cut" />
-                <MenuItem Header="_Copy" />
-                <MenuItem Header="_Paste" />
+            <MenuItem Header="_Statistics" Command="{Binding FileManagerVM.ShowStatisticsCmmand}">
             </MenuItem>
         </Menu>
 

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Checkers.Views.Windows;
 
 namespace Checkers.ViewModels
 {
@@ -23,6 +24,7 @@ namespace Checkers.ViewModels
 		public ICommand NewGameCommand { get; }
 		public ICommand SaveGameCommand { get; }
 		public ICommand LoadGameCommand { get; }
+		public ICommand ShowStatisticsCmmand { get; }
 
 		public FileManagerVM(GameVM game)
 		{
@@ -32,6 +34,7 @@ namespace Checkers.ViewModels
 			NewGameCommand = new RelayCommand(NewGame);
 			SaveGameCommand = new RelayCommand(SaveGame);
 			LoadGameCommand = new RelayCommand(LoadGame);
+			ShowStatisticsCmmand = new RelayCommand(ShowStatistics);
 		}
 
 		private void NewGame(object parameter)
@@ -85,6 +88,11 @@ namespace Checkers.ViewModels
 			GameVM.Game = _fileManager.LoadGame(openDialog.FileName, false);
 			GameVM.ReInitializeGame(GameVM.Game);
 			Functions.Log("Game loaded");
+		}
+
+		private void ShowStatistics(object parameter)
+		{
+			new StatisticsWindow().ShowDialog();
 		}
 	}
 }
