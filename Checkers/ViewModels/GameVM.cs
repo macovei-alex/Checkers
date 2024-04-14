@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Shapes;
 using Checkers.Logic;
 using Checkers.Models;
@@ -16,6 +17,9 @@ namespace Checkers.ViewModels
 {
 	internal class GameVM : BaseNotifyPropertyChanged
 	{
+		private readonly FileManagerVM _fileManagerVM;
+		public FileManagerVM FileManagerVM => _fileManagerVM;
+
 		private Game _game;
 		public Game Game
 		{
@@ -23,6 +27,7 @@ namespace Checkers.ViewModels
 			set
 			{
 				_game = value;
+				BoardVM = new BoardVM(this, _game.Board);
 				OnPropertyChanged(nameof(Game));
 			}
 		}
@@ -67,6 +72,7 @@ namespace Checkers.ViewModels
 				OnPropertyChanged(nameof(Moves));
 			}
 		}
+
 		private ObservableCollection<Pair> _possibleMoves;
 		public ObservableCollection<Pair> PossibleMoves
 		{
@@ -91,13 +97,38 @@ namespace Checkers.ViewModels
 
 		public GameVM()
 		{
-			Board board = new Board();
-			Game = new Game(board);
+			_fileManagerVM = new FileManagerVM(this);
+			ReInitializeGame();
+		}
+
+		public void ReInitializeGame(Game newGame = null)
+		{
+			Board board;
+			if (newGame != null)
+			{
+				board = newGame.Board;
+				Game = newGame;
+			}
+			else
+			{
+				board = new Board();
+				Game = new Game(board);
+			}
+
 			BoardVM = new BoardVM(this, board);
 			SelectedPiece = null;
 
-			PossibleMoves = new ObservableCollection<Pair>();
-			PossibleMoves.CollectionChanged += PossibleMoves_CollectionChanged;
+			if (PossibleMoves == null)
+			{
+				PossibleMoves = new ObservableCollection<Pair>();
+				PossibleMoves.CollectionChanged += PossibleMoves_CollectionChanged;
+			}
+			else
+			{
+				Functions.Clear(PossibleMoves);
+			}
+
+			ErrorMessage = string.Empty;
 		}
 
 		private void PossibleMoves_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

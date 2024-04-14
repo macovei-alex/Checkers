@@ -17,23 +17,15 @@ namespace Checkers.Logic
 		public Board Board { get; set; }
 
 		private readonly bool _allowMultipleMoves;
-		public bool AllowMultipleMoves
-		{
-			get => _allowMultipleMoves;
-		}
+		public bool AllowMultipleMoves => _allowMultipleMoves;
 
-		private Enums.Colors _turn;
-		public Enums.Colors Turn
-		{
-			get => _turn;
-			private set => _turn = value;
-		}
+		public Enums.Colors Turn { get; private set; }
 
 		public Game(Board board, bool allowMultipleMoves = false)
 		{
 			Board = board;
 			_allowMultipleMoves = allowMultipleMoves;
-			_turn = Enums.Colors.White;
+			Turn = Enums.Colors.White;
 		}
 
 		[JsonConstructor]
@@ -41,8 +33,10 @@ namespace Checkers.Logic
 		{
 			Board = board;
 			_allowMultipleMoves = allowMultipleMoves;
-			_turn = turn;
+			Turn = turn;
 		}
+
+		#region higher level move methods
 
 		public bool Move(int startingRow, int startingCol, params int[] coordinates)
 		{
@@ -93,6 +87,8 @@ namespace Checkers.Logic
 			MoveWithoutTurn(board, new Pair(startingRow, startingCol), positions);
 		}
 
+		#endregion
+
 		public void MoveWithoutTurn(Board board, Pair start, params Pair[] positions)
 		{
 			string retMessage = BoardValidator.CheckDataLegal(board, AllowMultipleMoves, start, positions);
@@ -133,6 +129,11 @@ namespace Checkers.Logic
 				{
 					board[middlePos].RemovePiece();
 				}
+			}
+
+			if (end.Item1 == 0 || end.Item1 == Board.DEFAULT_ROWS - 1)
+			{
+				board[end].Type = Enums.Types.King;
 			}
 		}
 
@@ -192,6 +193,7 @@ namespace Checkers.Logic
 		}
 
 		#region Utility methods
+
 		public override bool Equals(object obj)
 		{
 			Game other = obj as Game;
@@ -239,6 +241,7 @@ namespace Checkers.Logic
 		{
 			return JsonConvert.DeserializeObject<Game>(json);
 		}
+
 		#endregion
 	}
 }

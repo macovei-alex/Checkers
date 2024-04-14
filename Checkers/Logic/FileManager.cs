@@ -11,36 +11,26 @@ namespace Checkers.Logic
 	{
 		public static string DefaultSavesFolderPath => Path.GetFullPath(Properties.Settings.Default.SavesFolderPath);
 
-		private string SavesFolderPath { get; set; }
+		public string SavesFolderPath { get; private set; }
 
 		public FileManager(string savesFolderPath)
 		{
 			SavesFolderPath = savesFolderPath;
 		}
 
-		public string SaveGame(string fileName, Game game, bool askForConfirmation = true)
+		public void SaveGame(string fileName, Game game, bool appendToDirectory)
 		{
 			string json = game.ToJson();
-			string filePath = Path.Combine(SavesFolderPath, fileName);
-			if (File.Exists(filePath) && askForConfirmation)
-			{
-				var result = MessageBox.Show("File already exists. Do you want to overwrite it?", "Question", MessageBoxButton.YesNo);
-
-				if (result == MessageBoxResult.No)
-				{
-					Functions.Log($"Save action cancelled for file ( {filePath} )");
-					return null;
-				}
-			}
+			string filePath = appendToDirectory ? Path.Combine(SavesFolderPath, fileName) : fileName;
 			File.WriteAllText(filePath, json);
 
 			Functions.Log($"Save action successful for file ( {filePath} )");
-			return json;
+			return;
 		}
 
-		public Game LoadGame(string fileName)
+		public Game LoadGame(string fileName, bool appendToDirectory)
 		{
-			string filePath = Path.Combine(SavesFolderPath, fileName);
+			string filePath = appendToDirectory ? Path.Combine(SavesFolderPath, fileName) : fileName;
 			if (!File.Exists(filePath))
 			{
 				Functions.Log($"Load action failed for file ( {filePath} ): File not found");

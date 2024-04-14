@@ -24,29 +24,20 @@
             <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
-
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="15, 10"/>
-                    <Setter Property="FontSize" Value="15"/>
-                    <Setter Property="Padding" Value="10, 5"/>
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Margin" Value="15, 10"/>
-                    <Setter Property="FontSize" Value="15"/>
-                    <Setter Property="Padding" Value="10, 5"/>
-                </Style>
-            </StackPanel.Resources>
-
-            <Button Name="NewGameButton" Content="New Game"/>
-            <Button Name="SaveGameButton" Content="Save Game"/>
-            <Button Name="LoadGameButton" Content="Load Game"/>
-            <Button Name="ApplyMoveButton" Content="Apply Current Move"/>
-
-            <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
-            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}" TextWrapping="Wrap"/>
-        </StackPanel>
+        <Menu>
+            <MenuItem Header="_File">
+                <MenuItem Header="_New Game" Command="{Binding FileManagerVM.NewGameCommand}"/>
+                <MenuItem Header="_Save Game" Command="{Binding FileManagerVM.SaveGameCommand}"/>
+                <MenuItem Header="_Load Game" Command="{Binding FileManagerVM.LoadGameCommand}"/>
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Cut" />
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+        </Menu>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ItemsControl Name="ItemsGrid" ItemsSource="{Binding BoardVM.PiecesVM, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -65,12 +56,12 @@
                                     <Button Width="70" Height="70" Content="{Binding}" Command="{Binding ClickCommand}">
                                         <Button.Template>
                                             <ControlTemplate>
-                                                
+
                                                 <Grid>
                                                     <Rectangle Stretch="Fill" Fill="Green"/>
                                                     <Image Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Opacity="{Binding ImageOpacity, UpdateSourceTrigger=PropertyChanged}"/>
                                                 </Grid>
-                                                
+
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>

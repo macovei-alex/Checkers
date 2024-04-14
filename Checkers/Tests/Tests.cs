@@ -32,8 +32,8 @@ namespace Checkers.Tests
 		private void Test1()
 		{
 			Game game = new Game(new Board());
-			FileManager.SaveGame("test1.json", game, false);
-			Game copy = FileManager.LoadGame("test1.json");
+			FileManager.SaveGame("test1.json", game, true);
+			Game copy = FileManager.LoadGame("test1.json", true);
 
 			AssertEqual(game, copy);
 			FileManager.DeleteGame("test1.json");
@@ -42,8 +42,8 @@ namespace Checkers.Tests
 		private void Test2()
 		{
 			Game game = new Game(new Board());
-			FileManager.SaveGame("test1.json", game, false);
-			Game copy = FileManager.LoadGame("test1.json");
+			FileManager.SaveGame("test1.json", game, true);
+			Game copy = FileManager.LoadGame("test1.json", true);
 
 			AssertThrows<GameException>(() => game.Move(new Pair(2, 1)));
 			AssertThrows<GameException>(() => game.Move(new Pair(2, 1), null));
@@ -69,8 +69,8 @@ namespace Checkers.Tests
 		{
 
 			Game game = new Game(new Board());
-			FileManager.SaveGame("test1.json", game, false);
-			Game copy = FileManager.LoadGame("test1.json");
+			FileManager.SaveGame("test1.json", game, true);
+			Game copy = FileManager.LoadGame("test1.json", true);
 
 			AssertThrows<GameException>(() => game.Move(2, 1));
 			AssertThrows<GameException>(() => game.Move(2, 1, null));
