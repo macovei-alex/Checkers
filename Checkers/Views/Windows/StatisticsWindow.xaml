@@ -7,7 +7,7 @@
         xmlns:context="clr-namespace:Checkers.ViewModels"
         xmlns:converters="clr-namespace:Checkers.Views.Converters"
         mc:Ignorable="d"
-        Title="StatisticsWindow" Width="500" Height="250">
+        Title="StatisticsWindow" Width="500" Height="300">
 
     <Window.Resources>
         <converters:PercentageConverter x:Key="PercentageConverter"/>
@@ -36,6 +36,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -47,10 +48,12 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Percentage of white wins:"/>
         <Label Grid.Row="2" Grid.Column="0" Content="Total number of black wins:"/>
         <Label Grid.Row="3" Grid.Column="0" Content="Percentage of black wins:"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Maximum number of winner pieces on the board:"/>
 
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Statistics.WhiteWins}"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding WhiteWinsPercentage, Converter={StaticResource PercentageConverter}}"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Statistics.BlackWins}"/>
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding BlackWinsPercentage, Converter={StaticResource PercentageConverter}}"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Statistics.MaxWinnerPiecesLeft}"/>
     </Grid>
 </Window>

@@ -27,6 +27,8 @@ namespace Checkers.ViewModels
 		public ICommand SaveGameCommand { get; }
 		public ICommand LoadGameCommand { get; }
 		public ICommand ShowStatisticsCommand { get; }
+		public ICommand ShowAboutCommand { get; }
+		public ICommand ShowRulesCommand { get; }
 
 		public FileManagerVM(GameVM game)
 		{
@@ -37,6 +39,8 @@ namespace Checkers.ViewModels
 			SaveGameCommand = new RelayCommand(SaveGame);
 			LoadGameCommand = new RelayCommand(LoadGame);
 			ShowStatisticsCommand = new RelayCommand(ShowStatistics);
+			ShowAboutCommand = new RelayCommand(ShowAbout);
+			ShowRulesCommand = new RelayCommand(ShowRules);
 		}
 
 		private void NewGame(object parameter)
@@ -102,6 +106,18 @@ namespace Checkers.ViewModels
 
 			new StatisticsWindow().ShowDialog();
 			Functions.Log("Statistics loaded");
+		}
+
+		private void ShowAbout(object parameter)
+		{
+			new AboutWindow().ShowDialog();
+			Functions.Log("Statistics loaded");
+		}
+
+		private void ShowRules(object parameter)
+		{
+			new RulesWindow().ShowDialog();
+			Functions.Log("Rules loaded");
 		}
 	}
 }

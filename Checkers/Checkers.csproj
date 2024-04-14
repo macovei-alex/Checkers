@@ -91,15 +91,26 @@
     <Compile Include="ViewModels\FileManagerVM.cs" />
     <Compile Include="ViewModels\GameVM.cs" />
     <Compile Include="ViewModels\PieceVM.cs" />
+    <Compile Include="ViewModels\RulesVM.cs" />
     <Compile Include="ViewModels\StatisticsVM.cs" />
     <Compile Include="Views\Converters\PercentageConverter.cs" />
     <Compile Include="Views\Converters\TurnConverter.cs" />
     <Compile Include="Views\Pages\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\RulesWindow.xaml.cs">
+      <DependentUpon>RulesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\StatisticsWindow.xaml.cs">
       <DependentUpon>StatisticsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Windows\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\GameWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Pages\GamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\RulesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

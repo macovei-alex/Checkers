@@ -49,5 +49,14 @@ namespace Checkers.Properties {
                 return ((string)(this["StatisticsFilePath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\Assets\\game rules.txt")]
+        public string RulesFilePath {
+            get {
+                return ((string)(this["RulesFilePath"]));
+            }
+        }
     }
 }

@@ -25,16 +25,17 @@
         </Grid.ColumnDefinitions>
 
         <Menu>
-            <MenuItem Header="_File">
-                <MenuItem Header="_New Game" Command="{Binding FileManagerVM.NewGameCommand}"/>
-                <MenuItem Header="_Save Game" Command="{Binding FileManagerVM.SaveGameCommand}"/>
-                <MenuItem Header="_Load Game" Command="{Binding FileManagerVM.LoadGameCommand}"/>
-                <Separator />
-                <MenuItem Header="_Exit" />
+            <MenuItem Header="File">
+                <MenuItem Header="New Game" Command="{Binding FileManagerVM.NewGameCommand}"/>
+                <MenuItem Header="Save Game" Command="{Binding FileManagerVM.SaveGameCommand}"/>
+                <MenuItem Header="Load Game" Command="{Binding FileManagerVM.LoadGameCommand}"/>
+                <MenuItem Header="Statistics" Command="{Binding FileManagerVM.ShowStatisticsCommand}"/>
             </MenuItem>
-            <MenuItem Header="_Statistics">
-                <MenuItem Header="_Show Statistics" Command="{Binding FileManagerVM.ShowStatisticsCommand}"/>
+            <MenuItem Header="Help">
+                <MenuItem Header="Game rules" Command="{Binding FileManagerVM.ShowRulesCommand}"/>
+                <MenuItem Header="About" Command="{Binding FileManagerVM.ShowAboutCommand}"/>
             </MenuItem>
+
         </Menu>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">

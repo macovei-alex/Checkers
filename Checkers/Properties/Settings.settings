@@ -11,5 +11,8 @@
     <Setting Name="StatisticsFilePath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">..\..\Assets\statistics.json</Value>
     </Setting>
+    <Setting Name="RulesFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\Assets\game rules.txt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

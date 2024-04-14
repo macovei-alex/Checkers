@@ -1,0 +1,7 @@
+1. Tabla si piesele
+
+	Dimensiunea tablei este de 8x8 si fiecare piesa poate sa fie de 2 tipuri (rege sau regina) si de 2 culori (alba sau neagra).
+	
+2. Mutarile
+
+	
