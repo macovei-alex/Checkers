@@ -32,7 +32,8 @@
                 <Separator />
                 <MenuItem Header="_Exit" />
             </MenuItem>
-            <MenuItem Header="_Statistics" Command="{Binding FileManagerVM.ShowStatisticsCmmand}">
+            <MenuItem Header="_Statistics">
+                <MenuItem Header="_Show Statistics" Command="{Binding FileManagerVM.ShowStatisticsCommand}"/>
             </MenuItem>
         </Menu>
 

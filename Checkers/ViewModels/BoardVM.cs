@@ -13,7 +13,7 @@ using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels
 {
-	internal class BoardVM : BaseNotifyPropertyChanged
+	internal class BoardVM : BaseViewModel
 	{
 		private ObservableCollection<ObservableCollection<PieceVM>> _piecesVM;
 		public ObservableCollection<ObservableCollection<PieceVM>> PiecesVM

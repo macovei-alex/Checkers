@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Checkers.ViewModels
 {
-	internal class BaseNotifyPropertyChanged : INotifyPropertyChanged
+	internal class BaseViewModel : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

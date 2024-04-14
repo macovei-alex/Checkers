@@ -12,7 +12,7 @@ using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels
 {
-	internal class PieceVM : BaseNotifyPropertyChanged
+	internal class PieceVM : BaseViewModel
 	{
 		public static readonly Dictionary<ImageTypes, BitmapImage> ImagesDictionary = new Dictionary<ImageTypes, BitmapImage> {
 			{ ImageTypes.WhiteSquare, Functions.LoadImage(Path.Combine(Functions.AssetsFolderPath, "WhiteSquare.png")) },

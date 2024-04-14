@@ -40,5 +40,14 @@ namespace Checkers.Properties {
                 return ((string)(this["AssetsFolderPath"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\Assets\\statistics.json")]
+        public string StatisticsFilePath {
+            get {
+                return ((string)(this["StatisticsFilePath"]));
+            }
+        }
     }
 }

@@ -8,5 +8,8 @@
     <Setting Name="AssetsFolderPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">..\..\Assets</Value>
     </Setting>
+    <Setting Name="StatisticsFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">..\..\Assets\statistics.json</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

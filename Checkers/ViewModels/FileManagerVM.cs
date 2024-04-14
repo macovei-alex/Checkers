@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Checkers.Views.Windows;
+using Checkers.Models;
+using System.IO;
 
 namespace Checkers.ViewModels
 {
@@ -24,7 +26,7 @@ namespace Checkers.ViewModels
 		public ICommand NewGameCommand { get; }
 		public ICommand SaveGameCommand { get; }
 		public ICommand LoadGameCommand { get; }
-		public ICommand ShowStatisticsCmmand { get; }
+		public ICommand ShowStatisticsCommand { get; }
 
 		public FileManagerVM(GameVM game)
 		{
@@ -34,7 +36,7 @@ namespace Checkers.ViewModels
 			NewGameCommand = new RelayCommand(NewGame);
 			SaveGameCommand = new RelayCommand(SaveGame);
 			LoadGameCommand = new RelayCommand(LoadGame);
-			ShowStatisticsCmmand = new RelayCommand(ShowStatistics);
+			ShowStatisticsCommand = new RelayCommand(ShowStatistics);
 		}
 
 		private void NewGame(object parameter)
@@ -63,7 +65,7 @@ namespace Checkers.ViewModels
 
 			if (saveDialog.ShowDialog() == false || saveDialog.FileName == null)
 			{
-				MessageBox.Show("Save action cancelled");
+				MessageBox.Show("Save action canceled");
 				return;
 			}
 
@@ -81,7 +83,7 @@ namespace Checkers.ViewModels
 
 			if (openDialog.ShowDialog() == false || openDialog.FileName == null)
 			{
-				MessageBox.Show("Load action cancelled");
+				MessageBox.Show("Load action canceled");
 				return;
 			}
 
@@ -92,7 +94,14 @@ namespace Checkers.ViewModels
 
 		private void ShowStatistics(object parameter)
 		{
+			if (!File.Exists(Properties.Settings.Default.StatisticsFilePath))
+			{
+				MessageBox.Show($"The statistics file does not exist at {Statistics.StatisticsFilePath}");
+				return;
+			}
+
 			new StatisticsWindow().ShowDialog();
+			Functions.Log("Statistics loaded");
 		}
 	}
 }

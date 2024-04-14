@@ -15,7 +15,7 @@ using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels
 {
-	internal class GameVM : BaseNotifyPropertyChanged
+	internal class GameVM : BaseViewModel
 	{
 		private readonly FileManagerVM _fileManagerVM;
 		public FileManagerVM FileManagerVM => _fileManagerVM;

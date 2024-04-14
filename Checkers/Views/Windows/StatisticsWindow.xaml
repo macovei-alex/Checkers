@@ -4,9 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Checkers.Views.Windows"
+        xmlns:context="clr-namespace:Checkers.ViewModels"
+        xmlns:converters="clr-namespace:Checkers.Views.Converters"
         mc:Ignorable="d"
-        Title="StatisticsWindow" Height="450" Width="800">
+        Title="StatisticsWindow" Width="500" Height="250">
+
+    <Window.Resources>
+        <converters:PercentageConverter x:Key="PercentageConverter"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <context:StatisticsVM/>
+    </Window.DataContext>
+
     <Grid>
-        <TextBlock Text="lalalala"></TextBlock>
+        <Grid.Resources>
+            <Style TargetType="Label">
+                <Setter Property="Margin" Value="15, 10"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Padding" Value="10, 5"/>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="15, 10"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Padding" Value="10, 5"/>
+            </Style>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Total number of white wins:"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Percentage of white wins:"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Total number of black wins:"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Percentage of black wins:"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Statistics.WhiteWins}"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding WhiteWinsPercentage, Converter={StaticResource PercentageConverter}}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Statistics.BlackWins}"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding BlackWinsPercentage, Converter={StaticResource PercentageConverter}}"/>
     </Grid>
 </Window>
