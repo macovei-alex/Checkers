@@ -21,7 +21,7 @@
     <Grid Background="AliceBlue" Width="{Binding ElementName=ItemsGrid, Path=Width}" Height="{Binding ElementName=ItemsGrid, Path=Height}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
@@ -45,7 +45,7 @@
             <Button Name="ApplyMoveButton" Content="Apply Current Move"/>
 
             <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
-            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}"/>
+            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}" TextWrapping="Wrap"/>
         </StackPanel>
 
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">

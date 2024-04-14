@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -23,6 +24,21 @@ namespace Checkers.Utilities
 		{
 			Item1 = pair.Item1;
 			Item2 = pair.Item2;
+		}
+
+		public int Max()
+		{
+			return Math.Max(Item1, Item2);
+		}
+
+		public int Min()
+		{
+			return Math.Min(Item1, Item2);
+		}
+
+		public static Pair operator -(Pair first, Pair second)
+		{
+			return new Pair(first.Item1 - second.Item1, first.Item2 - second.Item2);
 		}
 
 		public override string ToString()

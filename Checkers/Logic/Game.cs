@@ -62,13 +62,7 @@ namespace Checkers.Logic
 
 		public bool Move(Pair startingPosition, params Pair[] positions)
 		{
-			string ret = BoardValidator.CheckDataLegal(Board, AllowMultipleMoves, startingPosition, positions);
-			if (ret != null)
-			{
-				throw new GameException(ret);
-			}
-
-			if (positions.Length > 1)
+			if (positions?.Length > 1)
 			{
 				Board clone = Board.DeepClone();
 				MoveWithoutTurn(clone, startingPosition, positions);
@@ -128,14 +122,17 @@ namespace Checkers.Logic
 				throw new GameException(retMessage);
 			}
 
-			Pair middlePos = new Pair(
-				(start.Item1 + end.Item1) / 2,
-				(start.Item2 + end.Item2) / 2);
-			var oppositeColor = Functions.OppositeColor(Turn);
-
-			if (board[middlePos]?.Color == oppositeColor)
+			if (Math.Abs((start - end).Min()) == 2)
 			{
-				board[middlePos].RemovePiece();
+				Pair middlePos = new Pair(
+					(start.Item1 + end.Item1) / 2,
+					(start.Item2 + end.Item2) / 2);
+				var oppositeColor = Functions.OppositeColor(Turn);
+
+				if (board[middlePos]?.Color == oppositeColor)
+				{
+					board[middlePos].RemovePiece();
+				}
 			}
 		}
 
