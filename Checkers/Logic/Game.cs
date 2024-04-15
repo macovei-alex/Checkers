@@ -157,41 +157,49 @@ namespace Checkers.Logic
 			}
 		}
 
-		public List<Pair> GetLegalMoves(Board board, Pair start, Pair[] excludedPositions = null)
+		public List<Pair> GetLegalMoves(Board board, bool mustCapture, Pair start, Pair[] excludedPositions = null)
 		{
-			List<Pair> values = new List<Pair>();
-
-			Pair end = null;
-			Pair rowLimits = new Pair(Math.Max(0, start.Item1 - 2), Math.Min(start.Item1 + 2, board.Rows - 1));
-			Pair colLimits = new Pair(Math.Max(0, start.Item2 - 2), Math.Min(start.Item2 + 2, board.Columns - 1));
-
-			for (int i = rowLimits.Item1; i <= rowLimits.Item2; i++)
+			List<Pair> legalPositoons = new List<Pair>();
+			List<Pair> possiblePositions;
+			if (mustCapture)
 			{
-				for (int j = colLimits.Item1; j <= colLimits.Item2; j++)
+				possiblePositions = new List<Pair>()
 				{
-					if (excludedPositions != null && excludedPositions.Contains(new Pair(i, j)))
-					{
-						continue;
-					}
+					new Pair(start.Item1 - 2, start.Item2 - 2),
+					new Pair(start.Item1 - 2, start.Item2 + 2),
+					new Pair(start.Item1 + 2, start.Item2 - 2),
+					new Pair(start.Item1 + 2, start.Item2 + 2),
+				};
+			}
+			else
+			{
+				possiblePositions = new List<Pair>()
+				{
+					new Pair(start.Item1 - 2, start.Item2 - 2),
+					new Pair(start.Item1 - 2, start.Item2 + 2),
+					new Pair(start.Item1 - 1, start.Item2 - 1),
+					new Pair(start.Item1 - 1, start.Item2 + 1),
+					new Pair(start.Item1 + 1, start.Item2 - 2),
+					new Pair(start.Item1 + 1, start.Item2 + 1),
+					new Pair(start.Item1 + 2, start.Item2 - 2),
+					new Pair(start.Item1 + 2, start.Item2 + 2),
+				};
+			}
 
-					if (end == null)
-					{
-						end = new Pair(i, j);
-					}
-					else
-					{
-						end.Item1 = i;
-						end.Item2 = j;
-					}
+			foreach (Pair pos in possiblePositions)
+			{
+				if (excludedPositions != null && excludedPositions.Contains(pos))
+				{
+					continue;
+				}
 
-					if (BoardValidator.CheckSingleMoveLegal(board, start, end) == null)
-					{
-						values.Add(end);
-						end = null;
-					}
+				if (BoardValidator.CheckSingleMoveLegal(board, start, pos) == null)
+				{
+					legalPositoons.Add(pos);
 				}
 			}
-			return values;
+
+			return legalPositoons;
 		}
 
 		private bool CheckWin(Board board)

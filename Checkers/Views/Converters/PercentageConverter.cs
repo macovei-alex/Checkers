@@ -11,7 +11,8 @@ namespace Checkers.Views.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return string.Format("{0}%", value);
+			string formatted = ((float)value).ToString("0.00");
+			return $"{formatted}%";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

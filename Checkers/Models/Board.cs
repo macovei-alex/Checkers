@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Media;
+using static Checkers.Utilities.ExtensionMethods;
 
 namespace Checkers.ViewModels
 {
@@ -21,8 +22,8 @@ namespace Checkers.ViewModels
 		public const int DEFAULT_COLUMNS = 8;
 		public const int DEFAULT_PLAYER_STARTING_ROWS = 3;
 
-		public int Rows => Pieces != null ? Pieces.Length : 0;
-		public int Columns => (Pieces != null && Pieces.Length > 0 && Pieces[0] != null) ? Pieces[0].Length : 0;
+		public int Rows => Pieces.Rows();
+		public int Columns => Pieces.Columns();
 
 		private Piece[][] _pieces;
 		public Piece[][] Pieces

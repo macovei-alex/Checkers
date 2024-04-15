@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,7 @@ namespace Checkers.ViewModels
 			{
 				_game = value;
 				BoardVM = new BoardVM(this, _game.Board);
+				MultipleMovesAllow = null;
 				OnPropertyChanged(nameof(Game));
 			}
 		}
@@ -98,6 +100,15 @@ namespace Checkers.ViewModels
 			{
 				_errorMessage = value;
 				OnPropertyChanged(nameof(ErrorMessage));
+			}
+		}
+
+		public string MultipleMovesAllow
+		{
+			get => Game.AllowMultipleMoves ? "Multiple moves are allowed" : "Multiple moves are NOT allowed";
+			set
+			{
+				OnPropertyChanged(nameof(MultipleMovesAllow));
 			}
 		}
 
@@ -243,7 +254,7 @@ namespace Checkers.ViewModels
 			}
 
 			SelectedPiece = piece;
-			Functions.AddRange(PossibleMoves, Game.GetLegalMoves(Game.Board, SelectedPiece.BoardPosition));
+			Functions.AddRange(PossibleMoves, Game.GetLegalMoves(Game.Board, false, SelectedPiece.BoardPosition));
 		}
 
 		private void HandleCaseNotAllowMultiple(PieceVM piece)

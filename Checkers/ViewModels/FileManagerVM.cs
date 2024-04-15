@@ -45,13 +45,14 @@ namespace Checkers.ViewModels
 
 		private void NewGame(object parameter)
 		{
-			var result = MessageBox.Show("Do you want to save the current game?", "Save  current game", MessageBoxButton.YesNoCancel);
+			var result = MessageBox.Show("Do you want to save the current game?", "Save current game", MessageBoxButton.YesNoCancel);
 			if (result == MessageBoxResult.Yes)
 			{
 				SaveGame(null);
 			}
 			else if (result == MessageBoxResult.Cancel)
 			{
+				Functions.Log("New game action canceled");
 				return;
 			}
 
@@ -69,7 +70,7 @@ namespace Checkers.ViewModels
 
 			if (saveDialog.ShowDialog() == false || saveDialog.FileName == null)
 			{
-				MessageBox.Show("Save action canceled");
+				Functions.Log("Save action canceled");
 				return;
 			}
 
@@ -87,7 +88,7 @@ namespace Checkers.ViewModels
 
 			if (openDialog.ShowDialog() == false || openDialog.FileName == null)
 			{
-				MessageBox.Show("Load action canceled");
+				Functions.Log("Load action canceled");
 				return;
 			}
 

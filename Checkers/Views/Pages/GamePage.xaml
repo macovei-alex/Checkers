@@ -19,7 +19,7 @@
     <Grid Background="AliceBlue" Width="{Binding ElementName=ItemsGrid, Path=Width}" Height="{Binding ElementName=ItemsGrid, Path=Height}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
         <Menu>
@@ -44,6 +44,7 @@
                 </Style>
             </StackPanel.Resources>
 
+            <TextBlock Name="MultipleMovesAllowedTextBlock" Text="{Binding MultipleMovesAllow}" TextWrapping="Wrap"/>
             <Button Name="ApplyMoveButton" Command="{Binding ApplyMoveCommand}" Margin="0, 20, 0, 0">
                 <TextBlock Text="Apply Current Move"/>
             </Button>

@@ -27,12 +27,12 @@ namespace Checkers.Utilities
 
 		public static int Rows<T>(this T[][] matrix)
 		{
-			return matrix.Length;
+			return matrix != null ? matrix.Length : 0;
 		}
 
 		public static int Columns<T>(this T[][] matrix)
 		{
-			return matrix != null ? matrix[0].Length : 0;
+			return matrix != null && matrix[0] != null ? matrix[0].Length : 0;
 		}
 	}
 }

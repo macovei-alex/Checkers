@@ -20,7 +20,7 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		public double WhiteWinsPercentage
+		public float WhiteWinsPercentage
 		{
 			get
 			{
@@ -28,11 +28,11 @@ namespace Checkers.ViewModels
 				{
 					return 0;
 				}
-				return Statistics.WhiteWins / (double)(Statistics.WhiteWins + Statistics.BlackWins);
+				return 100 * Statistics.WhiteWins / (float)(Statistics.WhiteWins + Statistics.BlackWins);
 			}
 		}
 
-		public double BlackWinsPercentage
+		public float BlackWinsPercentage
 		{
 			get
 			{
@@ -40,7 +40,7 @@ namespace Checkers.ViewModels
 				{
 					return 0;
 				}
-				return Statistics.BlackWins / (double)(Statistics.WhiteWins + Statistics.BlackWins);
+				return 100 * Statistics.BlackWins / (float)(Statistics.WhiteWins + Statistics.BlackWins);
 			}
 		}
 

@@ -29,11 +29,11 @@ namespace Checkers.Models
 		}
 
 		[JsonConstructor]
-		public Statistics(int whiteWins, int blackWins)
+		public Statistics(int whiteWins, int blackWins, int maxWinnerPiecesLeft)
 		{
 			WhiteWins = whiteWins;
 			BlackWins = blackWins;
-			MaxWinnerPiecesLeft = Math.Max(whiteWins, blackWins);
+			MaxWinnerPiecesLeft = maxWinnerPiecesLeft;
 		}
 
 		public static void UpdateStatistics(Game game)
@@ -44,7 +44,7 @@ namespace Checkers.Models
 			{
 				foreach (Piece piece in row)
 				{
-					if (piece.Color == winner)
+					if (piece.Color == winner && piece.Type != Types.None)
 					{
 						pieceCounter++;
 					}
@@ -67,11 +67,7 @@ namespace Checkers.Models
 				statistics.BlackWins++;
 			}
 
-			if (pieceCount > statistics.MaxWinnerPiecesLeft)
-			{
-				statistics.MaxWinnerPiecesLeft = pieceCount;
-			}
-
+			statistics.MaxWinnerPiecesLeft = Math.Max(statistics.MaxWinnerPiecesLeft, pieceCount);
 			statistics.SaveStatistics();
 		}
 
