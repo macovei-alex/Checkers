@@ -179,7 +179,7 @@ namespace Checkers.Logic
 					new Pair(start.Item1 - 2, start.Item2 + 2),
 					new Pair(start.Item1 - 1, start.Item2 - 1),
 					new Pair(start.Item1 - 1, start.Item2 + 1),
-					new Pair(start.Item1 + 1, start.Item2 - 2),
+					new Pair(start.Item1 + 1, start.Item2 - 1),
 					new Pair(start.Item1 + 1, start.Item2 + 1),
 					new Pair(start.Item1 + 2, start.Item2 - 2),
 					new Pair(start.Item1 + 2, start.Item2 + 2),
