@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Checkers.Models;
+using Checkers.ViewModels;
 using static Checkers.Utilities.Enums;
 
 namespace Checkers.Utilities
@@ -86,6 +89,33 @@ namespace Checkers.Utilities
 			for (int i = collection.Count - 1; i >= 0; i--)
 			{
 				collection.RemoveAt(i);
+			}
+		}
+
+		public static void CollectionChanged<T>(NotifyCollectionChangedEventArgs e,
+			Predicate<T> addPredicate,
+			Predicate<T> removePredicate,
+			params ObservableCollection<T>[] collectionsCheckExists)
+		{
+			T elem;
+			switch (e.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					elem = (T)e.NewItems[e.NewItems.Count - 1];
+					addPredicate(elem);
+					break;
+
+				case NotifyCollectionChangedAction.Remove:
+					elem = (T)e.OldItems[e.OldItems.Count - 1];
+					foreach (var collection in collectionsCheckExists)
+					{
+						if (collection.Contains(elem))
+						{
+							break;
+						}
+					}
+					removePredicate(elem);
+					break;
 			}
 		}
 	}

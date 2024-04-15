@@ -140,12 +140,12 @@ namespace Checkers.ViewModels
 				if (result == DialogResult.Yes)
 				{
 					Game = new Game(board, true);
-					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (object parameter) => true);
+					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (parameter) => true);
 				}
 				else
 				{
 					Game = new Game(board);
-					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (object parameter) => false);
+					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (parameter) => false);
 				}
 			}
 
@@ -156,8 +156,10 @@ namespace Checkers.ViewModels
 			if (PossibleMoves == null)
 			{
 				PossibleMoves = new ObservableCollection<Pair>();
-				PossibleMoves.CollectionChanged
-					+= (s, e) => CollectionChanged<Pair>(e, MultipleMoves);
+				PossibleMoves.CollectionChanged += (s, e) => Functions.CollectionChanged(e,
+					(pair) => BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = true,
+					(pair) => BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false,
+					MultipleMoves);
 			}
 			else
 			{
@@ -167,8 +169,10 @@ namespace Checkers.ViewModels
 			if (MultipleMoves == null)
 			{
 				MultipleMoves = new ObservableCollection<Pair>();
-				MultipleMoves.CollectionChanged
-					+= (s, e) => CollectionChanged<Pair>(e, PossibleMoves);
+				MultipleMoves.CollectionChanged += (s, e) => Functions.CollectionChanged(e,
+					(pair) => BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = true,
+					(pair) => BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false,
+					PossibleMoves);
 			}
 			else
 			{
@@ -176,30 +180,6 @@ namespace Checkers.ViewModels
 			}
 
 			ErrorMessage = string.Empty;
-		}
-
-		private void CollectionChanged<T>(NotifyCollectionChangedEventArgs e, params ObservableCollection<Pair>[] collectionsCheckExists)
-		{
-			Pair pair;
-			switch (e.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					pair = e.NewItems[e.NewItems.Count - 1] as Pair;
-					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = true;
-					break;
-
-				case NotifyCollectionChangedAction.Remove:
-					pair = e.OldItems[e.OldItems.Count - 1] as Pair;
-					foreach (var collection in collectionsCheckExists)
-					{
-						if (collection.Contains(pair))
-						{
-							break;
-						}
-					}
-					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
-					break;
-			}
 		}
 
 		public void PieceClicked(PieceVM piece)
