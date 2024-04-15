@@ -13,7 +13,7 @@ namespace Checkers.ViewModels.Commands
 
 		public BaseCommand()
 		{
-			CanExecuteChanged += (sender, e) => CanExecute(null);
+			CanExecuteChanged += (s, e) => CanExecute(null);
 		}
 
 		public virtual bool CanExecute(object parameter)
@@ -25,7 +25,10 @@ namespace Checkers.ViewModels.Commands
 
 		public void NotifyCanExecute()
 		{
-			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+			if (CanExecuteChanged != null)
+			{
+				CanExecuteChanged(this, EventArgs.Empty);
+			}
 		}
 	}
 }

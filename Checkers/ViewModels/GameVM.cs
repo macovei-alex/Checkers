@@ -83,6 +83,8 @@ namespace Checkers.ViewModels
 			}
 		}
 
+		private bool FirstMoveTake { get; set; } = true;
+
 		private ObservableCollection<Pair> _possibleMoves;
 		public ObservableCollection<Pair> PossibleMoves
 		{
@@ -133,6 +135,7 @@ namespace Checkers.ViewModels
 			{
 				board = newGame.Board;
 				Game = newGame;
+				ApplyMoveCommand.NotifyCanExecute();
 			}
 			else
 			{
@@ -248,6 +251,11 @@ namespace Checkers.ViewModels
 				return;
 			}
 
+			if (!FirstMoveTake)
+			{
+				return;
+			}
+
 			if (TemporaryBoard == null)
 			{
 				TemporaryBoard = Game.Board.DeepClone();
@@ -264,10 +272,19 @@ namespace Checkers.ViewModels
 			{
 				Game.MoveWithoutTurn(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
 
+				if (Math.Abs((LastPiece.BoardPosition - piece.BoardPosition).Item1) != 2)
+				{
+					FirstMoveTake = false;
+				}
+
 				MultipleMoves.Add(piece.BoardPosition);
 				Functions.Clear(PossibleMoves);
-				Functions.AddRange(PossibleMoves, Game.GetLegalMoves(TemporaryBoard, true, piece.BoardPosition));
-				LastPiece = piece;
+
+				if (FirstMoveTake)
+				{
+					Functions.AddRange(PossibleMoves, Game.GetLegalMoves(TemporaryBoard, true, piece.BoardPosition));
+					LastPiece = piece;
+				}
 			}
 			catch (GameException exception)
 			{
@@ -306,6 +323,7 @@ namespace Checkers.ViewModels
 			Functions.Clear(PossibleMoves);
 			Functions.Clear(MultipleMoves);
 			TemporaryBoard = null;
+			FirstMoveTake = true;
 		}
 	}
 }
