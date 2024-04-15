@@ -10,9 +10,10 @@ namespace Checkers.ViewModels.Commands
 	internal class RelayCommand : BaseCommand
 	{
 		private readonly Action<object> _execute;
-		private readonly Func<object, bool> _canExecute;
+		private Func<object, bool> _canExecute;
 
 		public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+			: base()
 		{
 			if (execute == null)
 			{

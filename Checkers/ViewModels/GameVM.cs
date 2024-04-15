@@ -114,13 +114,14 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		public ICommand ApplyMoveCommand { get; private set; }
+		public RelayCommand ApplyMoveCommand { get; private set; }
 
 		#endregion
 
 		public GameVM()
 		{
 			FileManagerVM = new FileManagerVM(this);
+			ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (param) => Game.AllowMultipleMoves);
 
 			ReInitializeGame();
 		}
@@ -142,12 +143,12 @@ namespace Checkers.ViewModels
 				if (result == DialogResult.Yes)
 				{
 					Game = new Game(board, true);
-					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (parameter) => true);
+					ApplyMoveCommand.NotifyCanExecute();
 				}
 				else
 				{
 					Game = new Game(board);
-					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (parameter) => false);
+					ApplyMoveCommand.NotifyCanExecute();
 				}
 			}
 
@@ -277,8 +278,11 @@ namespace Checkers.ViewModels
 
 		private void ApplyCurrentMove(object parameter)
 		{
-			Game.Board = TemporaryBoard;
-			Game.Turn = Functions.OppositeColor(Game.Turn);
+			if (TemporaryBoard != null)
+			{
+				Game.Board = TemporaryBoard;
+				Game.Turn = Functions.OppositeColor(Game.Turn);
+			}
 
 			RefreshMoves();
 			UpdateImages();

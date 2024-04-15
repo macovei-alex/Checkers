@@ -11,11 +11,21 @@ namespace Checkers.ViewModels.Commands
 	{
 		public event EventHandler CanExecuteChanged;
 
+		public BaseCommand()
+		{
+			CanExecuteChanged += (sender, e) => CanExecute(null);
+		}
+
 		public virtual bool CanExecute(object parameter)
 		{
 			return true;
 		}
 
 		public abstract void Execute(object parameter);
+
+		public void NotifyCanExecute()
+		{
+			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+		}
 	}
 }
