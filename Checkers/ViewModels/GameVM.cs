@@ -24,6 +24,7 @@ namespace Checkers.ViewModels
 		#region data
 
 		public FileManagerVM FileManagerVM { get; }
+		public bool AllowMultipleMovesSetting { get; set; } = false;
 
 		private Game _game;
 		public Game Game
@@ -83,8 +84,6 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		private bool FirstMoveTake { get; set; } = true;
-
 		private ObservableCollection<Pair> _possibleMoves;
 		public ObservableCollection<Pair> PossibleMoves
 		{
@@ -116,15 +115,11 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		public RelayCommand ApplyMoveCommand { get; private set; }
-
 		#endregion
 
 		public GameVM()
 		{
 			FileManagerVM = new FileManagerVM(this);
-			ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (param) => Game.AllowMultipleMoves);
-
 			ReInitializeGame();
 		}
 
@@ -135,24 +130,11 @@ namespace Checkers.ViewModels
 			{
 				board = newGame.Board;
 				Game = newGame;
-				ApplyMoveCommand.NotifyCanExecute();
 			}
 			else
 			{
 				board = new Board();
-
-				var result = MessageBox.Show("Do you want to allow multiple moves for this game?", "Allow mutiple moves", MessageBoxButtons.YesNo);
-
-				if (result == DialogResult.Yes)
-				{
-					Game = new Game(board, true);
-					ApplyMoveCommand.NotifyCanExecute();
-				}
-				else
-				{
-					Game = new Game(board);
-					ApplyMoveCommand.NotifyCanExecute();
-				}
+				Game = new Game(board, AllowMultipleMovesSetting);
 			}
 
 			BoardVM = new BoardVM(this, board);
@@ -251,14 +233,15 @@ namespace Checkers.ViewModels
 				return;
 			}
 
-			if (!FirstMoveTake)
-			{
-				return;
-			}
-
 			if (TemporaryBoard == null)
 			{
 				TemporaryBoard = Game.Board.DeepClone();
+			}
+
+			if (LastPiece.BoardPosition == piece.BoardPosition)
+			{
+				ApplyCurrentMove();
+				return;
 			}
 
 			string ret = BoardValidator.CheckSingleMoveLegal(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
@@ -270,21 +253,20 @@ namespace Checkers.ViewModels
 
 			try
 			{
-				Game.MoveWithoutTurn(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
-
 				if (Math.Abs((LastPiece.BoardPosition - piece.BoardPosition).Item1) != 2)
 				{
-					FirstMoveTake = false;
+					HandleCaseNotAllowMultiple(piece);
+					RefreshMoves();
+					return;
 				}
+
+				Game.MoveWithoutTurn(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
 
 				MultipleMoves.Add(piece.BoardPosition);
 				Functions.Clear(PossibleMoves);
 
-				if (FirstMoveTake)
-				{
-					Functions.AddRange(PossibleMoves, Game.GetLegalMoves(TemporaryBoard, true, piece.BoardPosition));
-					LastPiece = piece;
-				}
+				Functions.AddRange(PossibleMoves, Game.GetLegalMoves(TemporaryBoard, true, piece.BoardPosition));
+				LastPiece = piece;
 			}
 			catch (GameException exception)
 			{
@@ -293,7 +275,7 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		private void ApplyCurrentMove(object parameter)
+		private void ApplyCurrentMove()
 		{
 			if (TemporaryBoard != null)
 			{
@@ -323,7 +305,6 @@ namespace Checkers.ViewModels
 			Functions.Clear(PossibleMoves);
 			Functions.Clear(MultipleMoves);
 			TemporaryBoard = null;
-			FirstMoveTake = true;
 		}
 	}
 }

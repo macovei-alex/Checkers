@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Checkers.Views.Windows"
         xmlns:context="clr-namespace:Checkers.ViewModels"
         mc:Ignorable="d"
-        Title="RulesWindow" Height="300" Width="450">
+        Title="Rules" Height="300" Width="450">
     
     <Window.DataContext>
         <context:RulesVM/>

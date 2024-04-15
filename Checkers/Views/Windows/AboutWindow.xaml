@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Checkers.Views.Windows"
         mc:Ignorable="d"
-        Title="About" Height="200" Width="450">
+        Title="About"
+        Width="450" Height="200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -31,8 +32,8 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Group:"/>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Macovei Alexandru-Fabian"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="alexandru.macovei@student.unitbv.ro"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="10LF222"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Macovei Alexandru-Fabian" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="alexandru.macovei@student.unitbv.ro" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="10LF222" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

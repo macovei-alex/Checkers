@@ -4,13 +4,91 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:Checkers"
+        xmlns:context="clr-namespace:Checkers.ViewModels"
+        xmlns:converters="clr-namespace:Checkers.Views.Converters"
 		mc:Ignorable="d"
-		Title="MainWindow"
-		x:Name="mainWindow"
+		Title="Checkers"
 		Width="800" Height="450"
 		SizeToContent="WidthAndHeight">
 
-	<Grid x:Name="MainGrid" Width="{Binding ElementName=mainFrame, Path=Width}" Height="{Binding ElementName=mainFrame, Path=Height}">
-		<Frame x:Name="mainFrame" NavigationUIVisibility="Hidden"/>
-	</Grid>
+    <Window.Resources>
+        <converters:TurnConverter x:Key="TurnConverter"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <context:GameVM/>
+    </Window.DataContext>
+
+    <Grid Background="AliceBlue" Width="{Binding ElementName=ItemsGrid, Path=Width}" Height="{Binding ElementName=ItemsGrid, Path=Height}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Header="New Game" Command="{Binding FileManagerVM.NewGameCommand}"/>
+                <MenuItem Header="Save Game" Command="{Binding FileManagerVM.SaveGameCommand}"/>
+                <MenuItem Header="Load Game" Command="{Binding FileManagerVM.LoadGameCommand}"/>
+                <MenuItem Header="Statistics" Command="{Binding FileManagerVM.ShowStatisticsCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Allow multiple moves" IsCheckable="true" IsChecked="{Binding AllowMultipleMovesSetting, Mode=TwoWay}"/>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Game rules" Command="{Binding FileManagerVM.ShowRulesCommand}"/>
+                <MenuItem Header="About" Command="{Binding FileManagerVM.ShowAboutCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="15, 10"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="Padding" Value="10, 5"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <TextBlock Name="MultipleMovesAllowedTextBlock" Text="{Binding MultipleMovesAllowedString}" TextWrapping="Wrap"/>
+            <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
+            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ItemsControl x:Name="ItemsGrid" ItemsSource="{Binding BoardVM.PiecesVM, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+
+                        <ItemsControl ItemsSource="{Binding}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Button Width="70" Height="70" Content="{Binding}" Command="{Binding ClickCommand}">
+                                        <Button.Template>
+                                            <ControlTemplate>
+
+                                                <Grid>
+                                                    <Rectangle Stretch="Fill" Fill="Green"/>
+                                                    <Image Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Opacity="{Binding ImageOpacity, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </Grid>
+
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </Grid>
 </Window>

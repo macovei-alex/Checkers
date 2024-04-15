@@ -21,25 +21,6 @@ namespace Checkers.Utilities
 	{
 		public static string AssetsFolderPath => Properties.Settings.Default.AssetsFolderPath;
 
-		public enum Pages
-		{
-			StartingPage,
-			GamePage,
-		}
-
-		public static string GetPageName(Pages page)
-		{
-			switch (page)
-			{
-				case Pages.StartingPage:
-					return "StartingPage";
-				case Pages.GamePage:
-					return "GamePage";
-				default:
-					return null;
-			}
-		}
-
 		public static Colors OppositeColor(Colors color)
 		{
 			return color == Colors.White ? Colors.Black : Colors.White;

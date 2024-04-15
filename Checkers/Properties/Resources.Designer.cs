@@ -59,5 +59,15 @@ namespace Checkers.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon checkers {
+            get {
+                object obj = ResourceManager.GetObject("checkers", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

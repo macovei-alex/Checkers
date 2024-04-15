@@ -7,7 +7,8 @@
         xmlns:context="clr-namespace:Checkers.ViewModels"
         xmlns:converters="clr-namespace:Checkers.Views.Converters"
         mc:Ignorable="d"
-        Title="StatisticsWindow" Width="500" Height="300">
+        Title="Statistics"
+        Width="500" Height="300">
 
     <Window.Resources>
         <converters:PercentageConverter x:Key="PercentageConverter"/>

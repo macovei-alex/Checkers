@@ -26,15 +26,6 @@ namespace Checkers
 		public GameWindow()
 		{
 			InitializeComponent();
-
-			SwapPage(Functions.Pages.GamePage);
-		}
-
-		internal void SwapPage(Functions.Pages page)
-		{
-			string pageName = Functions.GetPageName(page);
-			mainFrame.Navigate(new Uri($"Views\\Pages\\{pageName}.xaml", UriKind.Relative));
-			Title = $"Dictionary/{pageName}";
 		}
 	}
 }
