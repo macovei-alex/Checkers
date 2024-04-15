@@ -21,7 +21,7 @@ namespace Checkers.Logic
 		private readonly bool _allowMultipleMoves;
 		public bool AllowMultipleMoves => _allowMultipleMoves;
 
-		public Colors Turn { get; private set; }
+		public Colors Turn { get; set; }
 
 		public Game(Board board, bool allowMultipleMoves = false)
 		{
@@ -157,7 +157,7 @@ namespace Checkers.Logic
 			}
 		}
 
-		public List<Pair> GetLegalMoves(Board board, bool mustCapture, Pair start, Pair[] excludedPositions = null)
+		public List<Pair> GetLegalMoves(Board board, bool mustCapture, Pair start)
 		{
 			List<Pair> legalPositoons = new List<Pair>();
 			List<Pair> possiblePositions;
@@ -188,11 +188,6 @@ namespace Checkers.Logic
 
 			foreach (Pair pos in possiblePositions)
 			{
-				if (excludedPositions != null && excludedPositions.Contains(pos))
-				{
-					continue;
-				}
-
 				if (BoardValidator.CheckSingleMoveLegal(board, start, pos) == null)
 				{
 					legalPositoons.Add(pos);
@@ -218,7 +213,7 @@ namespace Checkers.Logic
 			return true;
 		}
 
-		#region Utility methods
+		#region utility methods
 
 		public override bool Equals(object obj)
 		{

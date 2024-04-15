@@ -44,7 +44,7 @@
                 </Style>
             </StackPanel.Resources>
 
-            <TextBlock Name="MultipleMovesAllowedTextBlock" Text="{Binding MultipleMovesAllow}" TextWrapping="Wrap"/>
+            <TextBlock Name="MultipleMovesAllowedTextBlock" Text="{Binding MultipleMovesAllowedString}" TextWrapping="Wrap"/>
             <Button Name="ApplyMoveButton" Command="{Binding ApplyMoveCommand}">
                 <TextBlock Text="Apply Current Move"/>
             </Button>

@@ -1,0 +1,282 @@
+{
+  "Board": {
+    "Rows": 8,
+    "Columns": 8,
+    "Pieces": [
+      [
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        }
+      ],
+      [
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        }
+      ],
+      [
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        }
+      ],
+      [
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        }
+      ],
+      [
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        }
+      ],
+      [
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        }
+      ],
+      [
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        }
+      ],
+      [
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 0
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        },
+        {
+          "Color": 2,
+          "Type": 1
+        },
+        {
+          "Color": 1,
+          "Type": 0
+        }
+      ]
+    ]
+  },
+  "AllowMultipleMoves": true,
+  "Turn": 1
+}

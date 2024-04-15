@@ -33,7 +33,7 @@ namespace Checkers.ViewModels
 			{
 				_game = value;
 				BoardVM = new BoardVM(this, _game.Board);
-				MultipleMovesAllow = null;
+				MultipleMovesAllowedString = null;
 				OnPropertyChanged(nameof(Game));
 			}
 		}
@@ -70,6 +70,8 @@ namespace Checkers.ViewModels
 			}
 		}
 
+		public PieceVM LastPiece { get; set; }
+
 		private ObservableCollection<Pair> _multipleMoves;
 		public ObservableCollection<Pair> MultipleMoves
 		{
@@ -103,12 +105,12 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		public string MultipleMovesAllow
+		public string MultipleMovesAllowedString
 		{
 			get => Game.AllowMultipleMoves ? "Multiple moves are allowed" : "Multiple moves are NOT allowed";
 			set
 			{
-				OnPropertyChanged(nameof(MultipleMovesAllow));
+				OnPropertyChanged(nameof(MultipleMovesAllowedString));
 			}
 		}
 
@@ -150,7 +152,7 @@ namespace Checkers.ViewModels
 			}
 
 			BoardVM = new BoardVM(this, board);
-			TemporaryBoard = board.DeepClone();
+			TemporaryBoard = null;
 			SelectedPiece = null;
 
 			if (PossibleMoves == null)
@@ -187,25 +189,17 @@ namespace Checkers.ViewModels
 			if (SelectedPiece == null)
 			{
 				HandleCaseSelectedNull(piece);
-				return;
 			}
-
-			if (!Game.AllowMultipleMoves)
+			else if (!Game.AllowMultipleMoves)
 			{
 				HandleCaseNotAllowMultiple(piece);
-				return;
 			}
-
-			if (Game.AllowMultipleMoves)
+			else if (Game.AllowMultipleMoves)
 			{
 				HandleAllowMultipleMoves(piece);
-				return;
 			}
 
-			if (Game.AllowMultipleMoves)
-			{
-				UpdateImages();
-			}
+			UpdateImages();
 		}
 
 		private void HandleCaseSelectedNull(PieceVM piece)
@@ -220,6 +214,7 @@ namespace Checkers.ViewModels
 			}
 
 			SelectedPiece = piece;
+			LastPiece = SelectedPiece;
 			Functions.AddRange(PossibleMoves, Game.GetLegalMoves(Game.Board, false, SelectedPiece.BoardPosition));
 		}
 
@@ -242,17 +237,51 @@ namespace Checkers.ViewModels
 
 			SelectedPiece = null;
 			Functions.Clear(PossibleMoves);
-			UpdateImages();
 		}
 
 		private void HandleAllowMultipleMoves(PieceVM piece)
 		{
-			HandleCaseNotAllowMultiple(piece);
+			if (SelectedPiece == piece)
+			{
+				RefreshMoves();
+				return;
+			}
+
+			if (TemporaryBoard == null)
+			{
+				TemporaryBoard = Game.Board.DeepClone();
+			}
+
+			string ret = BoardValidator.CheckSingleMoveLegal(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
+			if (ret != null)
+			{
+				ErrorMessage = ret;
+				return;
+			}
+
+			try
+			{
+				Game.MoveWithoutTurn(TemporaryBoard, LastPiece.BoardPosition, piece.BoardPosition);
+
+				MultipleMoves.Add(piece.BoardPosition);
+				Functions.Clear(PossibleMoves);
+				Functions.AddRange(PossibleMoves, Game.GetLegalMoves(TemporaryBoard, true, piece.BoardPosition));
+				LastPiece = piece;
+			}
+			catch (GameException exception)
+			{
+				RefreshMoves();
+				ErrorMessage = exception.Message;
+			}
 		}
 
 		private void ApplyCurrentMove(object parameter)
 		{
+			Game.Board = TemporaryBoard;
+			Game.Turn = Functions.OppositeColor(Game.Turn);
 
+			RefreshMoves();
+			UpdateImages();
 		}
 
 		private void UpdateImages()
@@ -264,6 +293,15 @@ namespace Checkers.ViewModels
 					BoardVM.PiecesVM[i][j].ImageType = Functions.MakeImageType(Game.Board[i, j].Type, Game.Board[i, j].Color);
 				}
 			}
+		}
+
+		private void RefreshMoves()
+		{
+			SelectedPiece = null;
+			LastPiece = null;
+			Functions.Clear(PossibleMoves);
+			Functions.Clear(MultipleMoves);
+			TemporaryBoard = null;
 		}
 	}
 }
