@@ -156,7 +156,8 @@ namespace Checkers.ViewModels
 			if (PossibleMoves == null)
 			{
 				PossibleMoves = new ObservableCollection<Pair>();
-				PossibleMoves.CollectionChanged += PossibleMoves_CollectionChanged;
+				PossibleMoves.CollectionChanged
+					+= (s, e) => CollectionChanged<Pair>(e, MultipleMoves);
 			}
 			else
 			{
@@ -166,7 +167,8 @@ namespace Checkers.ViewModels
 			if (MultipleMoves == null)
 			{
 				MultipleMoves = new ObservableCollection<Pair>();
-				MultipleMoves.CollectionChanged += MultipleMoves_CollectionChanged;
+				MultipleMoves.CollectionChanged
+					+= (s, e) => CollectionChanged<Pair>(e, PossibleMoves);
 			}
 			else
 			{
@@ -176,7 +178,7 @@ namespace Checkers.ViewModels
 			ErrorMessage = string.Empty;
 		}
 
-		private void PossibleMoves_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void CollectionChanged<T>(NotifyCollectionChangedEventArgs e, params ObservableCollection<Pair>[] collectionsCheckExists)
 		{
 			Pair pair;
 			switch (e.Action)
@@ -188,30 +190,14 @@ namespace Checkers.ViewModels
 
 				case NotifyCollectionChangedAction.Remove:
 					pair = e.OldItems[e.OldItems.Count - 1] as Pair;
-					if (!MultipleMoves.Contains(pair))
+					foreach (var collection in collectionsCheckExists)
 					{
-						BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
+						if (collection.Contains(pair))
+						{
+							break;
+						}
 					}
-					break;
-			}
-		}
-
-		private void MultipleMoves_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-		{
-			Pair pair;
-			switch (e.Action)
-			{
-				case NotifyCollectionChangedAction.Add:
-					pair = e.NewItems[e.NewItems.Count - 1] as Pair;
-					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = true;
-					break;
-
-				case NotifyCollectionChangedAction.Remove:
-					pair = e.OldItems[e.OldItems.Count - 1] as Pair;
-					if (!PossibleMoves.Contains(pair))
-					{
-						BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
-					}
+					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
 					break;
 			}
 		}

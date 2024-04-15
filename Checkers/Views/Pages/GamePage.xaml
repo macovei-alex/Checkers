@@ -45,7 +45,7 @@
             </StackPanel.Resources>
 
             <TextBlock Name="MultipleMovesAllowedTextBlock" Text="{Binding MultipleMovesAllow}" TextWrapping="Wrap"/>
-            <Button Name="ApplyMoveButton" Command="{Binding ApplyMoveCommand}" Margin="0, 20, 0, 0">
+            <Button Name="ApplyMoveButton" Command="{Binding ApplyMoveCommand}">
                 <TextBlock Text="Apply Current Move"/>
             </Button>
             <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
