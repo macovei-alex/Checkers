@@ -28,7 +28,9 @@ namespace Checkers.Utilities
 			WhiteSquare = Types.None * 10 + Colors.White,
 			BlackSquare = Types.None * 10 + Colors.Black,
 			WhiteQueen = Types.Queen * 10 + Colors.White,
-			BlackQueen = Types.Queen * 10 + Colors.Black
+			BlackQueen = Types.Queen * 10 + Colors.Black,
+			WhiteKing = Types.King * 10 + Colors.White,
+			BlackKing = Types.King * 10 + Colors.Black
 		}
 
 		/*public static string ImageTypeToString(ImageTypes imageType)

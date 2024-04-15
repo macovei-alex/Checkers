@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
-using System.Windows.Shapes;
 using Checkers.Logic;
 using Checkers.Models;
 using Checkers.Utilities;
@@ -191,7 +192,7 @@ namespace Checkers.ViewModels
 				{
 					if (Game.Move(SelectedPiece.BoardPosition, piece.BoardPosition))
 					{
-						MessageBox.Show($"{Game.Turn} won!");
+						new Thread(() => MessageBox.Show($"{Functions.OppositeColor(Game.Turn)} won!")).Start();
 					}
 				}
 				catch (GameException exception)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Checkers.Utilities.Enums;
 
 namespace Checkers.Logic
 {
@@ -61,34 +62,68 @@ namespace Checkers.Logic
 				return retMessage;
 			}
 
-			if (board[start].Type == Enums.Types.Queen)
+			int moveDistance;
+			Pair posDistance;
+
+			switch (board[start].Type)
 			{
-				int moveDistance = board[start].Color == Enums.Colors.White ? 1 : -1;
-				Pair posDistance = new Pair(end.Item1 - start.Item1, end.Item2 - start.Item2);
+				case Types.Queen:
+					moveDistance = board[start].Color == Colors.White ? 1 : -1;
+					posDistance = new Pair(end.Item1 - start.Item1, end.Item2 - start.Item2);
 
-				if (posDistance.Item1 == 2 * moveDistance && Math.Abs(posDistance.Item2) == Math.Abs(2 * moveDistance))
-				{
-					Pair middlePos = new Pair((end.Item1 + start.Item1) / 2, (end.Item2 + start.Item2) / 2);
-
-					retMessage = CheckPositionLegal(board, middlePos, true);
-					if (retMessage != null)
+					if (posDistance.Item1 == 2 * moveDistance && Math.Abs(posDistance.Item2) == Math.Abs(2 * moveDistance))
 					{
-						return retMessage;
-					}
+						Pair middlePos = new Pair((end.Item1 + start.Item1) / 2, (end.Item2 + start.Item2) / 2);
 
-					if (board[middlePos].Color == board[start].Color)
-					{
-						return $"The piece cannot jump over a piece of its own color: piece at {start} tried jumping over {middlePos} to get to {end}";
+						retMessage = CheckPositionLegal(board, middlePos, true);
+						if (retMessage != null)
+						{
+							return retMessage;
+						}
+
+						if (board[middlePos].Color == board[start].Color)
+						{
+							return $"The piece cannot jump over a piece of its own color: piece at {start} tried jumping over {middlePos} to get to {end}";
+						}
 					}
-				}
-				else if (posDistance.Item1 == moveDistance && Math.Abs(posDistance.Item2) == Math.Abs(moveDistance))
-				{
-					;
-				}
-				else
-				{
-					return $"The piece cannot move ( {posDistance.Item1}, {posDistance.Item2} ) rows and columns at a time";
-				}
+					else if (posDistance.Item1 == moveDistance && Math.Abs(posDistance.Item2) == Math.Abs(moveDistance))
+					{
+						;
+					}
+					else
+					{
+						return $"The piece cannot move ( {posDistance.Item1}, {posDistance.Item2} ) rows and columns at a time";
+					}
+					break;
+
+				case Types.King:
+					posDistance = new Pair(Math.Abs(end.Item1 - start.Item1), Math.Abs(end.Item2 - start.Item2));
+
+					if (posDistance.Item1 == 2 && posDistance.Item2 == 2)
+					{
+						Pair middlePos = new Pair((end.Item1 + start.Item1) / 2, (end.Item2 + start.Item2) / 2);
+
+						retMessage = CheckPositionLegal(board, middlePos, true);
+						if (retMessage != null)
+						{
+							return retMessage;
+						}
+
+						if (board[middlePos].Color == board[start].Color)
+						{
+							return $"The piece cannot jump over a piece of its own color: piece at {start} tried jumping over {middlePos} to get to {end}";
+						}
+					}
+					else if (posDistance.Item1 == 1 && posDistance.Item2 == 1)
+					{
+						;
+					}
+					else
+					{
+						return $"The piece cannot move ( {posDistance.Item1}, {posDistance.Item2} ) rows and columns at a time";
+					}
+					break;
+
 			}
 
 			return null;
@@ -108,14 +143,14 @@ namespace Checkers.Logic
 
 			if (shouldHavePiece)
 			{
-				if (board[pos] == null || board[pos].Type == Enums.Types.None)
+				if (board[pos] == null || board[pos].Type == Types.None)
 				{
 					return $"There is no piece at starting position ( {pos} )";
 				}
 			}
 			else
 			{
-				if (board[pos] != null && board[pos].Type != Enums.Types.None)
+				if (board[pos] != null && board[pos].Type != Types.None)
 				{
 					return $"There is already a piece at position ( {pos} )";
 				}

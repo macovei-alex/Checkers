@@ -14,11 +14,14 @@ namespace Checkers.ViewModels
 {
 	internal class PieceVM : BaseViewModel
 	{
+		public static string AssetsFolderPath { get; } = Path.GetFullPath(Properties.Settings.Default.AssetsFolderPath);
 		public static readonly Dictionary<ImageTypes, BitmapImage> ImagesDictionary = new Dictionary<ImageTypes, BitmapImage> {
-			{ ImageTypes.WhiteSquare, Functions.LoadImage(Path.Combine(Functions.AssetsFolderPath, "WhiteSquare.png")) },
-			{ ImageTypes.BlackSquare, Functions.LoadImage(Path.Combine(Functions.AssetsFolderPath, "BlackSquare.png")) },
-			{ ImageTypes.WhiteQueen, Functions.LoadImage(Path.Combine(Functions.AssetsFolderPath, "WhiteQueen.png")) },
-			{ ImageTypes.BlackQueen, Functions.LoadImage(Path.Combine(Functions.AssetsFolderPath, "BlackQueen.png")) }
+			{ ImageTypes.WhiteSquare, Functions.LoadImage(Path.Combine(AssetsFolderPath, "WhiteSquare.png")) },
+			{ ImageTypes.BlackSquare, Functions.LoadImage(Path.Combine(AssetsFolderPath, "BlackSquare.png")) },
+			{ ImageTypes.WhiteQueen, Functions.LoadImage(Path.Combine(AssetsFolderPath, "WhiteQueen.png")) },
+			{ ImageTypes.BlackQueen, Functions.LoadImage(Path.Combine(AssetsFolderPath, "BlackQueen.png")) },
+			{ ImageTypes.WhiteKing, Functions.LoadImage(Path.Combine(AssetsFolderPath, "WhiteKing.png")) },
+			{ ImageTypes.BlackKing, Functions.LoadImage(Path.Combine(AssetsFolderPath, "BlackKing.png")) }
 		};
 
 		private readonly Pair _boardPosition;

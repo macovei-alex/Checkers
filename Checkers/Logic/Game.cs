@@ -6,6 +6,8 @@ using System.Text;
 using Newtonsoft.Json;
 using Checkers.ViewModels;
 using Checkers.Utilities;
+using static Checkers.Utilities.Enums;
+using System.Diagnostics;
 
 namespace Checkers.Logic
 {
@@ -19,17 +21,17 @@ namespace Checkers.Logic
 		private readonly bool _allowMultipleMoves;
 		public bool AllowMultipleMoves => _allowMultipleMoves;
 
-		public Enums.Colors Turn { get; private set; }
+		public Colors Turn { get; private set; }
 
 		public Game(Board board, bool allowMultipleMoves = false)
 		{
 			Board = board;
 			_allowMultipleMoves = allowMultipleMoves;
-			Turn = Enums.Colors.White;
+			Turn = Colors.White;
 		}
 
 		[JsonConstructor]
-		public Game(Board board, bool allowMultipleMoves, Enums.Colors turn)
+		public Game(Board board, bool allowMultipleMoves, Colors turn)
 		{
 			Board = board;
 			_allowMultipleMoves = allowMultipleMoves;
@@ -39,6 +41,11 @@ namespace Checkers.Logic
 		#region higher level move methods
 
 		public bool Move(int startingRow, int startingCol, params int[] coordinates)
+		{
+			return Move(Board, startingRow, startingCol, coordinates);
+		}
+
+		public bool Move(Board board, int startingRow, int startingCol, params int[] coordinates)
 		{
 			if (coordinates == null || coordinates.Length == 0 || coordinates.Length % 2 != 0)
 			{
@@ -51,24 +58,36 @@ namespace Checkers.Logic
 				positions[i] = new Pair(coordinates[i * 2], coordinates[i * 2 + 1]);
 			}
 
-			return Move(new Pair(startingRow, startingCol), positions);
+			return Move(board, new Pair(startingRow, startingCol), positions);
 		}
 
 		public bool Move(Pair startingPosition, params Pair[] positions)
 		{
+			return Move(Board, startingPosition, positions);
+		}
+
+		public bool Move(Board board, Pair startingPosition, params Pair[] positions)
+		{
 			if (positions?.Length > 1)
 			{
-				Board clone = Board.DeepClone();
+				Board clone = board.DeepClone();
 				MoveWithoutTurn(clone, startingPosition, positions);
-				Board.CopyDataFrom(clone);
+				board.CopyDataFrom(clone);
 			}
 			else
 			{
-				MoveWithoutTurn(Board, startingPosition, positions);
+				MoveWithoutTurn(board, startingPosition, positions);
 			}
 
 			Turn = Functions.OppositeColor(Turn);
-			return CheckWin();
+
+			bool win = CheckWin(board);
+			if (win == true)
+			{
+				Statistics.UpdateStatistics(this);
+			}
+
+			return win;
 		}
 
 		public void MoveWithoutTurn(Board board, int startingRow, int startingCol, params int[] coordinates)
@@ -103,11 +122,12 @@ namespace Checkers.Logic
 				SingleMoveWithoutTurn(board, positions[i - 1], positions[i]);
 			}
 
-			board[positions.Last()].Type = board[start].Type;
+			if (board[positions.Last()].Type == Types.None)
+			{
+				board[positions.Last()].Type = board[start].Type;
+			}
 			board[positions.Last()].Color = board[start].Color;
 			board[start].RemovePiece();
-
-			Board.CopyDataFrom(board);
 		}
 
 		public void SingleMoveWithoutTurn(Board board, Pair start, Pair end)
@@ -131,9 +151,9 @@ namespace Checkers.Logic
 				}
 			}
 
-			if (end.Item1 == 0 || end.Item1 == Board.DEFAULT_ROWS - 1)
+			if (end.Item1 == 0 || end.Item1 == board.Rows - 1)
 			{
-				board[end].Type = Enums.Types.King;
+				board[end].Type = Types.King;
 			}
 		}
 
@@ -174,15 +194,13 @@ namespace Checkers.Logic
 			return values;
 		}
 
-		private bool CheckWin()
+		private bool CheckWin(Board board)
 		{
-			Enums.Colors oppositeColor = Functions.OppositeColor(Turn);
-
 			for (byte i = 0; i < Board.DEFAULT_ROWS; i++)
 			{
 				for (byte j = 0; j < Board.DEFAULT_COLUMNS; j++)
 				{
-					if (Board[i, j] != null && Board[i, j].Color == oppositeColor)
+					if (board[i, j].Type != Types.None && board[i, j].Color == Turn)
 					{
 						return false;
 					}

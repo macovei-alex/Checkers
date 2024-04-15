@@ -9,7 +9,8 @@ namespace Checkers.ViewModels
 {
 	internal class RulesVM : BaseViewModel
 	{
-		private static readonly string RulesFilePath = Path.GetFullPath(Properties.Settings.Default.RulesFilePath);
+		private static readonly string _rulesFilePath = Path.GetFullPath(Properties.Settings.Default.RulesFilePath);
+		public static string RulesFilePath => _rulesFilePath;
 
 		private string _rulesText;
 		public string RulesText

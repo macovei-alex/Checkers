@@ -9,7 +9,8 @@ namespace Checkers.Logic
 {
 	internal class FileManager
 	{
-		public static string DefaultSavesFolderPath => Path.GetFullPath(Properties.Settings.Default.SavesFolderPath);
+		private static readonly string _defaultSavesFolderPath = Path.GetFullPath(Properties.Settings.Default.SavesFolderPath);
+		public static string DefaultSavesFolderPath => _defaultSavesFolderPath;
 
 		public string SavesFolderPath { get; private set; }
 
