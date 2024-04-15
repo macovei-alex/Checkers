@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management.Instrumentation;
@@ -107,14 +108,11 @@ namespace Checkers.Utilities
 
 				case NotifyCollectionChangedAction.Remove:
 					elem = (T)e.OldItems[e.OldItems.Count - 1];
-					foreach (var collection in collectionsCheckExists)
+					bool found = collectionsCheckExists?.Any(collection => collection.Contains(elem)) ?? false;
+					if (!found)
 					{
-						if (collection.Contains(elem))
-						{
-							break;
-						}
+						removePredicate(elem);
 					}
-					removePredicate(elem);
 					break;
 			}
 		}
