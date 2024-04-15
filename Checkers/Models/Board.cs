@@ -119,7 +119,7 @@ namespace Checkers.ViewModels
 			return new Board(-1, -1, -1);
 		}
 
-		public void CopyDataFrom(Board other)
+		public Board CopyDataFrom(Board other)
 		{
 			if (Rows != other.Rows || Columns != other.Columns)
 			{
@@ -134,6 +134,8 @@ namespace Checkers.ViewModels
 					this[i, j].Color = other[i, j].Color;
 				}
 			}
+
+			return this;
 		}
 
 		public Board DeepClone()

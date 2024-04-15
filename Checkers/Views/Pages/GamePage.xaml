@@ -7,8 +7,6 @@
 	  xmlns:context="clr-namespace:Checkers.ViewModels"
       xmlns:converters="clr-namespace:Checkers.Views.Converters"
 	  mc:Ignorable="d"
-	  Width="{Binding ElementName=ItemsGrid, Path=Width}"
-	  Height="{Binding ElementName=ItemsGrid, Path=Height}"
 	  Title="GamePage">
     <Page.Resources>
         <converters:TurnConverter x:Key="TurnConverter"/>
@@ -35,11 +33,26 @@
                 <MenuItem Header="Game rules" Command="{Binding FileManagerVM.ShowRulesCommand}"/>
                 <MenuItem Header="About" Command="{Binding FileManagerVM.ShowAboutCommand}"/>
             </MenuItem>
-
         </Menu>
 
+        <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="15, 10"/>
+                    <Setter Property="FontSize" Value="15"/>
+                    <Setter Property="Padding" Value="10, 5"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <Button Name="ApplyMoveButton" Command="{Binding ApplyMoveCommand}" Margin="0, 20, 0, 0">
+                <TextBlock Text="Apply Current Move"/>
+            </Button>
+            <TextBlock Name="TurnLabel" Text="{Binding Game.Turn, Converter={StaticResource TurnConverter}}"/>
+            <TextBlock Name="ErrorTextBlock" Text="{Binding ErrorMessage}" TextWrapping="Wrap"/>
+        </StackPanel>
+
         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ItemsControl Name="ItemsGrid" ItemsSource="{Binding BoardVM.PiecesVM, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl x:Name="ItemsGrid" ItemsSource="{Binding BoardVM.PiecesVM, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
 

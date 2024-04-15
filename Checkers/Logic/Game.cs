@@ -196,9 +196,9 @@ namespace Checkers.Logic
 
 		private bool CheckWin(Board board)
 		{
-			for (byte i = 0; i < Board.DEFAULT_ROWS; i++)
+			for (byte i = 0; i < board.Rows; i++)
 			{
-				for (byte j = 0; j < Board.DEFAULT_COLUMNS; j++)
+				for (byte j = 0; j < board.Columns; j++)
 				{
 					if (board[i, j].Type != Types.None && board[i, j].Color == Turn)
 					{

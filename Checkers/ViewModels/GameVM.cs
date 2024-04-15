@@ -7,19 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Input;
 using Checkers.Logic;
 using Checkers.Models;
 using Checkers.Utilities;
+using Checkers.ViewModels.Commands;
 using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels
 {
 	internal class GameVM : BaseViewModel
 	{
-		private readonly FileManagerVM _fileManagerVM;
-		public FileManagerVM FileManagerVM => _fileManagerVM;
+		#region data
+
+		public FileManagerVM FileManagerVM { get; }
 
 		private Game _game;
 		public Game Game
@@ -44,6 +47,8 @@ namespace Checkers.ViewModels
 			}
 		}
 
+		public Board TemporaryBoard { get; set; }
+
 		private PieceVM _selectedPiece;
 		public PieceVM SelectedPiece
 		{
@@ -63,14 +68,14 @@ namespace Checkers.ViewModels
 			}
 		}
 
-		private List<Pair> _moves;
-		public List<Pair> Moves
+		private ObservableCollection<Pair> _multipleMoves;
+		public ObservableCollection<Pair> MultipleMoves
 		{
-			get => _moves;
+			get => _multipleMoves;
 			set
 			{
-				_moves = value;
-				OnPropertyChanged(nameof(Moves));
+				_multipleMoves = value;
+				OnPropertyChanged(nameof(MultipleMoves));
 			}
 		}
 
@@ -96,9 +101,14 @@ namespace Checkers.ViewModels
 			}
 		}
 
+		public ICommand ApplyMoveCommand { get; private set; }
+
+		#endregion
+
 		public GameVM()
 		{
-			_fileManagerVM = new FileManagerVM(this);
+			FileManagerVM = new FileManagerVM(this);
+
 			ReInitializeGame();
 		}
 
@@ -113,10 +123,23 @@ namespace Checkers.ViewModels
 			else
 			{
 				board = new Board();
-				Game = new Game(board);
+
+				var result = MessageBox.Show("Do you want to allow multiple moves for this game?", "Allow mutiple moves", MessageBoxButtons.YesNo);
+
+				if (result == DialogResult.Yes)
+				{
+					Game = new Game(board, true);
+					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (object parameter) => true);
+				}
+				else
+				{
+					Game = new Game(board);
+					ApplyMoveCommand = new RelayCommand(ApplyCurrentMove, (object parameter) => false);
+				}
 			}
 
 			BoardVM = new BoardVM(this, board);
+			TemporaryBoard = board.DeepClone();
 			SelectedPiece = null;
 
 			if (PossibleMoves == null)
@@ -127,6 +150,16 @@ namespace Checkers.ViewModels
 			else
 			{
 				Functions.Clear(PossibleMoves);
+			}
+
+			if (MultipleMoves == null)
+			{
+				MultipleMoves = new ObservableCollection<Pair>();
+				MultipleMoves.CollectionChanged += MultipleMoves_CollectionChanged;
+			}
+			else
+			{
+				Functions.Clear(MultipleMoves);
 			}
 
 			ErrorMessage = string.Empty;
@@ -144,7 +177,30 @@ namespace Checkers.ViewModels
 
 				case NotifyCollectionChangedAction.Remove:
 					pair = e.OldItems[e.OldItems.Count - 1] as Pair;
-					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
+					if (!MultipleMoves.Contains(pair))
+					{
+						BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
+					}
+					break;
+			}
+		}
+
+		private void MultipleMoves_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			Pair pair;
+			switch (e.Action)
+			{
+				case NotifyCollectionChangedAction.Add:
+					pair = e.NewItems[e.NewItems.Count - 1] as Pair;
+					BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = true;
+					break;
+
+				case NotifyCollectionChangedAction.Remove:
+					pair = e.OldItems[e.OldItems.Count - 1] as Pair;
+					if (!PossibleMoves.Contains(pair))
+					{
+						BoardVM.PiecesVM[pair.Item1][pair.Item2].IsSelected = false;
+					}
 					break;
 			}
 		}
@@ -160,6 +216,12 @@ namespace Checkers.ViewModels
 			if (!Game.AllowMultipleMoves)
 			{
 				HandleCaseNotAllowMultiple(piece);
+				return;
+			}
+
+			if (Game.AllowMultipleMoves)
+			{
+				HandleAllowMultipleMoves(piece);
 				return;
 			}
 
@@ -204,6 +266,16 @@ namespace Checkers.ViewModels
 			SelectedPiece = null;
 			Functions.Clear(PossibleMoves);
 			UpdateImages();
+		}
+
+		private void HandleAllowMultipleMoves(PieceVM piece)
+		{
+			HandleCaseNotAllowMultiple(piece);
+		}
+
+		private void ApplyCurrentMove(object parameter)
+		{
+
 		}
 
 		private void UpdateImages()
