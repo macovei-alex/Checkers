@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using Checkers.Logic;
-using Checkers.Models;
+﻿using Checkers.Logic;
 using Checkers.Utilities;
-using Checkers.ViewModels.Commands;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading;
+using System.Windows.Forms;
 using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels

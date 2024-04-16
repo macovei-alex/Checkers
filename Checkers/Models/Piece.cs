@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Media.Imaging;
-using System.IO;
-using Checkers.Utilities;
-using System;
-using static Checkers.Utilities.Enums;
+﻿using static Checkers.Utilities.Enums;
 
 namespace Checkers.Models
 {

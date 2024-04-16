@@ -1,17 +1,12 @@
 ﻿using Checkers.Logic;
+using Checkers.Models;
 using Checkers.Utilities;
 using Checkers.ViewModels.Commands;
+using Checkers.Views.Windows;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Checkers.Views.Windows;
-using Checkers.Models;
-using System.IO;
 
 namespace Checkers.ViewModels
 {

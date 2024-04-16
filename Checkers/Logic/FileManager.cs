@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Checkers.Utilities;
 using System;
 using System.IO;
-using System.Windows;
-using System.Windows.Media.Imaging;
-using Checkers.Utilities;
 
 namespace Checkers.Logic
 {

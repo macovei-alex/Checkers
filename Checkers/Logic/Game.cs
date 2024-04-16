@@ -1,13 +1,12 @@
 ﻿using Checkers.Models;
+using Checkers.Utilities;
+using Checkers.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using Checkers.ViewModels;
-using Checkers.Utilities;
 using static Checkers.Utilities.Enums;
-using System.Diagnostics;
 
 namespace Checkers.Logic
 {

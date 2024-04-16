@@ -1,17 +1,7 @@
 ﻿using Checkers.Logic;
 using Checkers.Models;
 using Checkers.Utilities;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Media;
 using static Checkers.Utilities.ExtensionMethods;
 
 namespace Checkers.ViewModels

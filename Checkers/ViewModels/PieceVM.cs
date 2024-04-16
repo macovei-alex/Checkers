@@ -1,13 +1,8 @@
 ﻿using Checkers.Utilities;
-using Newtonsoft.Json;
-using System.Windows.Media.Imaging;
-using Checkers.Models;
-using System.ComponentModel;
-using System;
+using Checkers.ViewModels.Commands;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Input;
-using Checkers.ViewModels.Commands;
+using System.Windows.Media.Imaging;
 using static Checkers.Utilities.Enums;
 
 namespace Checkers.ViewModels

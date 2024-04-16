@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Checkers.Utilities
+﻿namespace Checkers.Utilities
 {
 	internal static class Enums
 	{
@@ -32,24 +26,5 @@ namespace Checkers.Utilities
 			WhiteKing = Types.King * 10 + Colors.White,
 			BlackKing = Types.King * 10 + Colors.Black
 		}
-
-		/*public static string ImageTypeToString(ImageTypes imageType)
-		{
-			switch (imageType)
-			{
-				case ImageTypes.None:
-					return "None";
-				case ImageTypes.WhiteSquare:
-					return "White square";
-				case ImageTypes.BlackSquare:
-					return "Black square";
-				case ImageTypes.WhiteQueen:
-					return "White queen";
-				case ImageTypes.BlackQueen:
-					return "Black queen";
-				default:
-					return "Invalid image type";
-			}
-		}*/
 	}
 }

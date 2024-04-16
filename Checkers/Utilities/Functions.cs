@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Management.Instrumentation;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
-using Checkers.Models;
-using Checkers.ViewModels;
 using static Checkers.Utilities.Enums;
 
 namespace Checkers.Utilities
